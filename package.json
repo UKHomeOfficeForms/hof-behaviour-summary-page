@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test:lint": "eslint .",
-    "test:unit": "mocha",
+    "test:unit": "istanbul cover _mocha",
     "test": "npm run test:lint && npm run test:unit"
   },
   "repository": {
@@ -26,7 +26,10 @@
     "eslint": "^3.14.1",
     "eslint-config-homeoffice": "^2.1.0",
     "hof-model": "^2.0.0",
+    "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
-    "reqres": "^1.2.2"
+    "reqres": "^1.2.2",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0"
   }
 }

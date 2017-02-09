@@ -24,7 +24,7 @@ describe('Confirm Controller', () => {
         '/two': {
           fields: ['field-two']
         },
-        '/done': {  }
+        '/done': {}
       }
     });
     controller._configure(req, res, done);
@@ -37,7 +37,7 @@ describe('Confirm Controller', () => {
   describe('locals', () => {
 
     beforeEach(() => {
-      sinon.stub(Base.prototype, 'locals').returns({ super: true });
+      sinon.stub(Base.prototype, 'locals').returns({super: true});
     });
     afterEach(() => {
       Base.prototype.locals.restore();
@@ -67,9 +67,15 @@ describe('Confirm Controller', () => {
       const result = controller.locals(req, res);
       expect(result.rows.length).to.equal(2);
       expect(result.rows[0]).to.have.a.property('section');
-      expect(req.translate).to.have.been.calledWithExactly(['pages.confirm.sections.section-one.header', 'pages.section-one.header']);
+      expect(req.translate).to.have.been.calledWithExactly([
+        'pages.confirm.sections.section-one.header',
+        'pages.section-one.header'
+      ]);
       expect(result.rows[1]).to.have.a.property('section');
-      expect(req.translate).to.have.been.calledWithExactly(['pages.confirm.sections.section-two.header', 'pages.section-two.header']);
+      expect(req.translate).to.have.been.calledWithExactly([
+        'pages.confirm.sections.section-two.header',
+        'pages.section-two.header'
+      ]);
     });
 
     it('maps the section fields onto a fields array for each section', () => {

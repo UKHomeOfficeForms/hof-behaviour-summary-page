@@ -10,7 +10,7 @@ If no sections config is passed, then the controller will create a section for e
 
 ```js
 '/confirm': {
-  controller: require('hof-form-controller'),
+  controller: require('hof-confirm-controller'),
   ...
 }
 ```
@@ -20,7 +20,7 @@ Alternatively, sections can be defined manually as follows:
 
 ```js
 '/confirm': {
-  controller: require('hof-form-controller'),
+  controller: require('hof-confirm-controller'),
   sections: {
     'museum-details': [
       'name',

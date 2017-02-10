@@ -1,6 +1,6 @@
 {
   "name": "hof-confirm-controller",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "HOF Controller for showing summary pages",
   "main": "index.js",
   "scripts": {

@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/UKHomeOfficeForms/hof-confirm-controller#readme",
   "dependencies": {
-    "hof-controllers": "^6.0.2"
+    "hof-controllers": "^6.0.2",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -204,6 +204,31 @@ describe('Confirm Controller', () => {
       expect(req.translate).to.have.been.calledWithExactly(['pages.confirm.sections.two.header', 'pages.two.header']);
     });
 
+    it('flattens fields if a custom implementation of `getFieldData` returns array for a field', () => {
+      req.sessionModel.set({
+        'field-one': 1
+      });
+      req.form.options.sections = {
+        'section-one': ['field-one']
+      };
+      controller.getFieldData = () => {
+        return [
+          {
+            label: 'one',
+            value: 1
+          },
+          {
+            label: 'two',
+            value: 2
+          }
+        ];
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields.length).to.equal(2);
+      expect(result.rows[0].fields[0].label).to.equal('one');
+      expect(result.rows[0].fields[1].label).to.equal('two');
+    });
+
   });
 
 });

@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/UKHomeOfficeForms/hof-behaviour-summary-page#readme",
   "dependencies": {
-    "hof-controllers": "^6.0.2",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

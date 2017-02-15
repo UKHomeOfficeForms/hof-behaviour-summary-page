@@ -1,16 +1,16 @@
-# hof-confirm-controller
+# hof-behaviour-summary-page
 
-HOF Controller for showing summary pages
+HOF behaviour for showing summary pages
 
-The controller will create a set of "locals" data which is compatible with [the `confirm` view from `hof-template-partials`](https://github.com/UKHomeOfficeForms/hof-template-partials/blob/master/views/confirm.html).
+The behaviour mixin will create a set of "locals" data which is compatible with [the `confirm` view from `hof-template-partials`](https://github.com/UKHomeOfficeForms/hof-template-partials/blob/master/views/confirm.html).
 
 ## Usage
 
-If no sections config is passed, then the controller will create a section for each step that has fields, and a row within each section for each field on that step.
+If no sections config is passed, then the mixin will create a section for each step that has fields, and a row within each section for each field on that step.
 
 ```js
 '/confirm': {
-  controller: require('hof-confirm-controller'),
+  behaviours: require('hof-behaviour-summary-page'),
   ...
 }
 ```
@@ -20,7 +20,7 @@ Alternatively, sections can be defined manually as follows:
 
 ```js
 '/confirm': {
-  controller: require('hof-confirm-controller'),
+  behaviours: require('hof-behaviour-summary-page'),
   sections: {
     'museum-details': [
       'name',

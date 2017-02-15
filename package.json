@@ -1,7 +1,7 @@
 {
-  "name": "hof-confirm-controller",
+  "name": "hof-behaviour-summary-page",
   "version": "1.0.2",
-  "description": "HOF Controller for showing summary pages",
+  "description": "HOF behaviour for showing summary pages",
   "main": "index.js",
   "scripts": {
     "test:lint": "eslint .",
@@ -10,24 +10,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UKHomeOfficeForms/hof-confirm-controller.git"
+    "url": "git+https://github.com/UKHomeOfficeForms/hof-behaviour-summary-page.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/UKHomeOfficeForms/hof-confirm-controller/issues"
+    "url": "https://github.com/UKHomeOfficeForms/hof-behaviour-summary-page/issues"
   },
-  "homepage": "https://github.com/UKHomeOfficeForms/hof-confirm-controller#readme",
+  "homepage": "https://github.com/UKHomeOfficeForms/hof-behaviour-summary-page#readme",
   "dependencies": {
-    "hof-controllers": "^6.0.2",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.14.1",
     "eslint-config-homeoffice": "^2.1.0",
+    "hof-form-controller": "^3.0.1",
     "hof-model": "^2.0.0",
     "istanbul": "^0.4.5",
+    "mixwith": "^0.1.1",
     "mocha": "^3.2.0",
     "reqres": "^1.2.2",
     "sinon": "^1.17.7",

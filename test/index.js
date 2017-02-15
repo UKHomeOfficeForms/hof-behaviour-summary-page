@@ -1,10 +1,12 @@
 'use strict';
 
-const Controller = require('../');
-const Base = require('hof-controllers').base;
+const mix = require('mixwith').mix;
+const Base = require('hof-form-controller');
+const Behaviour = require('../');
 
-describe('Confirm Controller', () => {
+class Controller extends mix(Base).with(Behaviour) {}
 
+describe('Summary Page Behaviour', () => {
   let controller;
   let req;
   let res;
@@ -12,6 +14,7 @@ describe('Confirm Controller', () => {
   beforeEach((done) => {
     req = request();
     res = response();
+
     controller = new Controller({
       route: '/foo',
       steps: {

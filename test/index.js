@@ -87,7 +87,7 @@ describe('Summary Page Behaviour', () => {
         'field-two': 2
       });
       req.form.options.sections = {
-        'section-one': ['field-one', 'field-two']
+        'section-one': ['field-one', 'field-two', 'field-three']
       };
       const result = controller.locals(req, res);
       expect(result.rows[0]).to.have.a.property('fields');
@@ -95,6 +95,7 @@ describe('Summary Page Behaviour', () => {
       expect(result.rows[0].fields.length).to.equal(2);
       expect(result.rows[0].fields[0].field).to.equal('field-one');
       expect(result.rows[0].fields[1].field).to.equal('field-two');
+      expect(result.rows[0].fields).not.to.include('field-three');
     });
 
     it('ignores fields with no value set', () => {
@@ -108,20 +109,6 @@ describe('Summary Page Behaviour', () => {
       expect(result.rows[0].fields.length).to.equal(1);
       expect(result.rows[0].fields[0].field).to.equal('field-one');
       expect(result.rows[0].fields[0].value).to.equal(1);
-    });
-
-    it('uses a nullValue for empty fields if defined', () => {
-      req.sessionModel.set({
-        'field-one': 1
-      });
-      req.form.options.nullValue = '-';
-      req.form.options.sections = {
-        'section-one': ['field-one', 'field-two']
-      };
-      const result = controller.locals(req, res);
-      expect(result.rows[0].fields.length).to.equal(2);
-      expect(result.rows[0].fields[0].value).to.equal(1);
-      expect(result.rows[0].fields[1].value).to.equal('-');
     });
 
     it('calculates the step for each field based on steps config', () => {

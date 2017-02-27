@@ -1,6 +1,6 @@
 {
   "name": "hof-behaviour-summary-page",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "HOF behaviour for showing summary pages",
   "main": "index.js",
   "scripts": {

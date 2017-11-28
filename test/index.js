@@ -111,6 +111,48 @@ describe('Summary Page Behaviour', () => {
       expect(result.rows[0].fields[0].value).to.equal(1);
     });
 
+    it('includes zero valued fields', () => {
+      req.sessionModel.set({
+        'field-one': 0
+      });
+      req.form.options.sections = {
+        'section-one': ['field-one', 'field-two']
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields.length).to.equal(1);
+      expect(result.rows[0].fields[0].field).to.equal('field-one');
+      expect(result.rows[0].fields[0].value).to.equal(0);
+    });
+
+    it('uses a nullValue for empty fields if defined', () => {
+      req.sessionModel.set({
+        'field-one': 1
+      });
+      req.form.options.nullValue = '-';
+      req.form.options.sections = {
+        'section-one': ['field-one', 'field-two']
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields.length).to.equal(2);
+      expect(result.rows[0].fields[0].value).to.equal(1);
+      expect(result.rows[0].fields[1].value).to.equal('-');
+    });
+
+    it('does not apply `nullValue` option to zero valued fields', () => {
+      req.sessionModel.set({
+        'field-one': 1,
+        'field-two': 0
+      });
+      req.form.options.nullValue = '-';
+      req.form.options.sections = {
+        'section-one': ['field-one', 'field-two']
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields.length).to.equal(2);
+      expect(result.rows[0].fields[0].value).to.equal(1);
+      expect(result.rows[0].fields[1].value).to.equal(0);
+    });
+
     it('calculates the step for each field based on steps config', () => {
       req.sessionModel.set({
         'field-one': 1,

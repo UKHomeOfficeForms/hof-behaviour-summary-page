@@ -89,13 +89,46 @@ describe('Summary Page Behaviour', () => {
       req.form.options.sections = {
         'section-one': ['field-one', 'field-two', 'field-three']
       };
+
       const result = controller.locals(req, res);
       expect(result.rows[0]).to.have.a.property('fields');
       expect(result.rows[0].fields).to.be.an('array');
       expect(result.rows[0].fields.length).to.equal(2);
       expect(result.rows[0].fields[0].field).to.equal('field-one');
+      expect(result.rows[0].fields[0].label).to.equal('pages.confirm.fields.field-one.label');
+      expect(result.rows[0].fields[0].changeLinkDescription)
+        .to.equal('pages.confirm.fields.field-one.changeLinkDescription');
       expect(result.rows[0].fields[1].field).to.equal('field-two');
+      expect(result.rows[0].fields[1].label).to.equal('pages.confirm.fields.field-two.label');
+      expect(result.rows[0].fields[1].changeLinkDescription)
+        .to.equal('pages.confirm.fields.field-two.changeLinkDescription');
       expect(result.rows[0].fields).not.to.include('field-three');
+
+      expect(req.translate).to.have.been.calledWithExactly(['pages.confirm.fields.field-one.label',
+                                                            'fields.field-one.summary',
+                                                            'fields.field-one.label',
+                                                            'fields.field-one.legend'
+                                                           ]);
+      expect(req.translate).to.have.been.calledWithExactly(['pages.confirm.fields.field-one.changeLinkDescription',
+                                                            'fields.field-one.changeLinkDescription',
+                                                            'pages.confirm.fields.field-one.label',
+                                                            'fields.field-one.summary',
+                                                            'fields.field-one.label',
+                                                            'fields.field-one.legend'
+                                                           ]);
+
+      expect(req.translate).to.have.been.calledWithExactly(['pages.confirm.fields.field-two.label',
+                                                            'fields.field-two.summary',
+                                                            'fields.field-two.label',
+                                                            'fields.field-two.legend'
+                                                           ]);
+      expect(req.translate).to.have.been.calledWithExactly(['pages.confirm.fields.field-two.changeLinkDescription',
+                                                            'fields.field-two.changeLinkDescription',
+                                                            'pages.confirm.fields.field-two.label',
+                                                            'fields.field-two.summary',
+                                                            'fields.field-two.label',
+                                                            'fields.field-two.legend'
+                                                           ]);
     });
 
     it('ignores fields with no value set', () => {

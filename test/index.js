@@ -186,6 +186,23 @@ describe('Summary Page Behaviour', () => {
       expect(result.rows[0].fields[1].value).to.equal(0);
     });
 
+    it('Should translate each entry in an array of values before returning the result', () => {
+      req.sessionModel.set({
+        'field-one': ['badgers', 'monkeys']
+      });
+      req.translate = sinon.stub();
+      req.translate.withArgs('fields.field-one.options.badgers.label').returns('Some badgers');
+      req.translate.withArgs('fields.field-one.options.monkeys.label').returns('A plethora of monkeys');
+
+      req.form.options.nullValue = '-';
+      req.form.options.sections = {
+        'section-one': ['field-one']
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields.length).to.equal(1);
+      expect(result.rows[0].fields[0].value).to.deep.equal(['Some badgers', 'A plethora of monkeys']);
+    });
+
     it('calculates the step for each field based on steps config', () => {
       req.sessionModel.set({
         'field-one': 1,

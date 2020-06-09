@@ -4,6 +4,8 @@ const mix = require('mixwith').mix;
 const Base = require('hof-form-controller');
 const Behaviour = require('../');
 
+const sumValues = (values) => values.reduce((a, b) => a + b, 0);
+
 class Controller extends mix(Base).with(Behaviour) {}
 
 describe('Summary Page Behaviour', () => {
@@ -244,6 +246,128 @@ describe('Summary Page Behaviour', () => {
       };
       const result = controller.locals(req, res);
       expect(result.rows[0].fields[2].step).to.equal('/two');
+    });
+
+    it('will return a derived field if derivation is specified', () => {
+      req.sessionModel.set({
+        'field-one': 1,
+        'field-two': 2
+      });
+      req.form.options.sections = {
+        'section-one': [
+          {
+            field: 'badger',
+            derivation: {
+              fromFields: ['field-one', 'field-two'],
+              combiner: sumValues
+            }
+          }
+        ]
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields[0].value).to.equal(3);
+      expect(req.translate).to.have.been.calledWithExactly([
+        'pages.confirm.fields.badger.label',
+        'fields.badger.summary',
+        'fields.badger.label',
+        'fields.badger.legend'
+      ]);
+    });
+
+    it('will return derived field skipping any fields which do not have values', () => {
+      req.sessionModel.set({
+        'field-one': 1,
+        'field-three': 2
+      });
+      req.form.options.sections = {
+        'section-one': [
+          {
+            field: 'badger',
+            derivation: {
+              fromFields: ['field-one', 'field-two', 'field-three'],
+              combiner: sumValues
+            }
+          }
+        ]
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields[0].value).to.equal(3);
+    });
+
+    it('will not return a derived field if no source fields have values', () => {
+      req.form.options.sections = {
+        'section-one': [
+          {
+            field: 'badger',
+            derivation: {
+              fromFields: ['field-one', 'field-two'],
+              combiner: sumValues
+            }
+          }
+        ]
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows.length).to.equal(0);
+    });
+
+    it('will not return a derived field if the combiner is not a function', () => {
+      req.sessionModel.set({
+        'field-one': 1,
+        'field-two': 2
+      });
+      req.form.options.sections = {
+        'section-one': [
+          {
+            field: 'badger',
+            derivation: {
+              fromFields: ['field-one', 'field-two'],
+              combiner: ''
+            }
+          }
+        ]
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows.length).to.equal(0);
+    });
+
+    it('will not return a derived field if no source fields are specified', () => {
+      req.sessionModel.set({
+        'field-one': 1,
+        'field-three': 2
+      });
+      req.form.options.sections = {
+        'section-one': [
+          {
+            field: 'badger',
+            derivation: {
+              combiner: sumValues
+            }
+          }
+        ]
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows.length).to.equal(0);
+    });
+
+    it('will apply parse function to a derived field if both are specified', () => {
+      req.sessionModel.set({
+        'field-one': 1,
+        'field-two': 2
+      });
+      req.form.options.sections = {
+        'section-one': [
+          {
+            field: 'badger',
+            derivation: {
+              fromFields: ['field-one', 'field-two'],
+              combiner: sumValues
+            },
+            parse: v => v + 1
+          }
+        ]
+      };
+      const result = controller.locals(req, res);
+      expect(result.rows[0].fields[0].value).to.equal(4);
     });
 
     it('parses the value of a field if a parse function is passed', () => {

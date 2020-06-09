@@ -1,11 +1,12 @@
 {
   "name": "hof-behaviour-summary-page",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "description": "HOF behaviour for showing summary pages",
   "main": "index.js",
   "scripts": {
     "test:lint": "eslint .",
     "test:unit": "nyc mocha",
+    "unit:debug" : "mocha --inspect-brk",
     "test": "npm run test:lint && npm run test:unit"
   },
   "repository": {

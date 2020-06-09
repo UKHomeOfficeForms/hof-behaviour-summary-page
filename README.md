@@ -56,6 +56,14 @@ Alternatively, a field can be passed as an object with a `field` property defini
 
 * `step` - `String` defines the step which the user is returned to to edit the field value. By default this is the first step in the form's steps configuration which contains the field.
 * `parse` - `Function` can parse the value for the field from the session into a value for display.
+* `derivation` - `Object` allows for a new derived field based on a combination of other fields in the form. Note that
+  if both `derivation` and `parse` are specified then parse will be applied to the result of derivation. E.G. 
+  ```javascript
+     derivation: {
+       fromFields: ['field-one', 'field-two'],
+       combiner: (values) => values.map(it => Number(it)).reduce((a, b) => a + b, 0) 
+     }
+  ```
 
 ## Translations
 
